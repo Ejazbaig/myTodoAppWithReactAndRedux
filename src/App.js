@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
+import ActionBar from "./components/todoActionbar/actionBar";
+import TodoItemContainer from "./components/todoItemContainer/itemContainer";
+import CheckBox from "./components/checkBox/CheckBox";
+import "./App.css";
 
 function App() {
+  let todoList = useSelector((state) => state.todoListDetails);
+  let checked = useSelector((state) => state.checked);
+  const inputFocus = useRef(null);
+  const handleClick = () => {
+    inputFocus.current.focus();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ActionBar
+        inputFocus={inputFocus}
+        handleClick={handleClick}
+        checkBox={
+          <CheckBox
+            id={"todoSelectDeslectAll"}
+            checked={checked}
+            label={"Select / Deselect All"}
+          />
+        }
+      ></ActionBar>
+      <div className="todoItemWrapper" id="todoItemWrapper">
+        {todoList.map((item) => (
+          <TodoItemContainer
+            key={item.id}
+            todoItemTitle={item.title}
+            todoItem={item.item}
+            id={item.id}
+            toggledClass={item.done}
+            handleClick={handleClick}
+            expand={item.expand}
+            checkBox={<CheckBox id={item.id} checked={item.checked} />}
+          ></TodoItemContainer>
+        ))}
+      </div>
     </div>
   );
 }
