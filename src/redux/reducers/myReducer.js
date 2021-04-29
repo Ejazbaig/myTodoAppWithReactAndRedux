@@ -204,7 +204,7 @@ export const myHandleInputChangeReducer = (state = myState, action) => {
         }
         newTodoListDetails[droppedItemIndex] = temp;
         return {
-          todoListDetails: newTodoListDetails,
+          todoListDetails: [...newTodoListDetails],
         };
       }
       if (draggedItemIndex > droppedItemIndex) {
@@ -214,7 +214,7 @@ export const myHandleInputChangeReducer = (state = myState, action) => {
         }
         newTodoListDetails[droppedItemIndex] = temp;
         return {
-          todoListDetails: newTodoListDetails,
+          todoListDetails: [...newTodoListDetails],
         };
       }
       break;
